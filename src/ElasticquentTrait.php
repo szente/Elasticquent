@@ -264,13 +264,13 @@ trait ElasticquentTrait
     public static function searchByQueryAndPaginate($query = null, $aggregations = null, $sourceFields = null, $sort = null, $size = 10)
     {
         $instance = new static;
-        $page = \Elasticquent\ElasticquentPaginator::resolveCurrentPage() ?: 1;
+        $page = ElasticquentPaginator::resolveCurrentPage() ?: 1;
         $limit = $size;
         $offset = ($page - 1) * $size;
 
         $collection = $instance::searchByQuery($query, $aggregations, $sourceFields, $limit, $offset, $sort);
 
-        return new \Elasticquent\ElasticquentPaginator($collection->all(), $collection->getHits(), $collection->totalHits(), $size, $page, ['path' => \Elasticquent\ElasticquentPaginator::resolveCurrentPath()]);
+        return new ElasticquentPaginator($collection->all(), $collection->getHits(), $collection->totalHits(), $size, $page, ['path' => ElasticquentPaginator::resolveCurrentPath()]);
     }
 
     /**
