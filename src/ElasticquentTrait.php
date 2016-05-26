@@ -249,6 +249,31 @@ trait ElasticquentTrait
     }
 
     /**
+     * Perform a custom search and paginate result collection.
+     *
+     * Using this method, a custom query can be sent to Elasticsearch.
+     *
+     * @param null $query
+     * @param null $aggregations
+     * @param null $sourceFields
+     * @param null $sort
+     * @param int|null $size
+     * @return ElasticquentPaginator
+
+     */
+    public static function searchByQueryAndPaginate($query = null, $aggregations = null, $sourceFields = null, $sort = null, $size = 10)
+    {
+        $instance = new static;
+        $page = \Elasticquent\ElasticquentPaginator::resolveCurrentPage() ?: 1;
+        $limit = $size;
+        $offset = ($page - 1) * $size;
+
+        $collection = $instance::searchByQuery($query, $aggregations, $sourceFields, $limit, $offset, $sort);
+
+        return new \Elasticquent\ElasticquentPaginator($collection->getItems(), $collection->getHits(), $collection->totalHits(), $size, $page, ['path' => \Elasticquent\ElasticquentPaginator::resolveCurrentPath()]);
+    }
+
+    /**
      * Perform a "complex" or custom search.
      *
      * Using this method, a custom query can be sent to Elasticsearch.
