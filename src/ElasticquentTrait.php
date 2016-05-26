@@ -270,7 +270,7 @@ trait ElasticquentTrait
 
         $collection = $instance::searchByQuery($query, $aggregations, $sourceFields, $limit, $offset, $sort);
 
-        return new \Elasticquent\ElasticquentPaginator($collection->getItems(), $collection->getHits(), $collection->totalHits(), $size, $page, ['path' => \Elasticquent\ElasticquentPaginator::resolveCurrentPath()]);
+        return new \Elasticquent\ElasticquentPaginator($collection->all(), $collection->getHits(), $collection->totalHits(), $size, $page, ['path' => \Elasticquent\ElasticquentPaginator::resolveCurrentPath()]);
     }
 
     /**
